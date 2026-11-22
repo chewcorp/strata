@@ -1,8 +1,8 @@
 # Intent: strata
 
-Owner: Russell Heilling. Status: draft. This repo is the memory tool: a library and CLI, harness-agnostic, with no kitchen logic. Skill wrappers stay in [chewcorp/minime-memory](https://github.com/chewcorp/minime-memory). Patterns P1–P12 and eval cases M1–M5 are carried from [`chewcorp/minime-memory` INTENT.md](https://github.com/chewcorp/minime-memory/blob/d449fb03742af37e9111e9595a08a0e782907757/INTENT.md) at `d449fb03742af37e9111e9595a08a0e782907757`. Each row links that source line. OKF profiles and fixture bundles are [CCP-1107](https://linear.app/chewcorp/issue/CCP-1107). Executable evals and without-strata baselines are [CCP-1108](https://linear.app/chewcorp/issue/CCP-1108).
+Status: draft. Requested for review by Russell Heilling. This repo is tooling for the minime plugin: a library and CLI, harness-agnostic, with no kitchen logic. It does not target one kitchen; other kitchens may exist. Skill wrappers stay in [chewcorp/minime-memory](https://github.com/chewcorp/minime-memory). Patterns P1–P12 and eval cases M1–M5 are carried from [`chewcorp/minime-memory` INTENT.md](https://github.com/chewcorp/minime-memory/blob/d449fb03742af37e9111e9595a08a0e782907757/INTENT.md) at `d449fb03742af37e9111e9595a08a0e782907757`. Each row links that source line.
 
-**Problem.** The base memory operations of an agent project should be the same everywhere, and runnable by script or hook: capture, curate, recall, refresh. Russell should not have to say the same correction twice. minime-memory holds the skill interface and no store or layer logic. strata holds the tooling.
+**Problem.** The base memory operations of an agent project should be the same everywhere, and runnable by script or hook: capture, curate, recall, refresh. A person should not have to give an agent the same correction twice. minime-memory holds the skill interface and no store or layer logic. strata holds the tooling.
 
 **Layers.** All three are OKF bundles, declared in the consuming project's `okf-core.toml`.
 
@@ -12,7 +12,7 @@ Owner: Russell Heilling. Status: draft. This repo is the memory tool: a library 
 | Empirical | The project's curated working context and empirical wiki. | Promotion to empirical happens only through a curation PR. |
 | Gold | Curated upstream bundles. Read-only. | Pull-only from upstream, through okf-core bundle sources; strata never writes to it. |
 
-**Hook ruling.** Russell, 21 Nov 2026:
+**Hook ruling.**
 
 > Hooks write only to the episodic layer. Promotion to empirical happens only through a curation PR. Gold is pull-only from upstream, through okf-core bundle sources; strata never writes to it.
 
@@ -51,18 +51,19 @@ M4's source pass line is "O2 holds; index lines stay facts, not activity". The p
 
 **Ownership.**
 
-- chewcorp/strata holds the library and CLI. It is harness-agnostic and contains no kitchen logic.
+- This repo holds the library and CLI. It is harness-agnostic and contains no kitchen logic.
 - chewcorp/minime-memory holds `remember`, `recall` and `tidy`. Those skills call strata. That repo holds no store or layer logic.
+- A kitchen is a consumer of this tool. This repo does not single out one kitchen.
 
 **Non-goals.**
 
-- No kitchen logic, and no chewcorp/kitchen machinery.
+- No kitchen logic in this repo. A kitchen stays outside the tool, and more than one kitchen may use it.
 - Harness-agnostic: no harness-specific capture, prompt, or session logic in this repo.
 - Skill wrappers stay in chewcorp/minime-memory.
 - No embeddings or vector stores.
 - No automatic conflict resolution. A person resolves.
-- No edits to always-on files beyond a one-line pointer Russell approves.
-- Not a replacement for the Cursor bot platform's own memory.
+- No edits to always-on files beyond a one-line pointer a person on the consuming project approves.
+- Not a replacement for a host platform's own memory.
 - No date in this contract.
 
-**Who decides.** Russell approves any one-line pointer in an always-on file, and resolves a recorded conflict. Promotion to empirical is a curation PR. strata proposes that PR; it does not merge it, and it never writes gold.
+**Who decides.** The consuming project approves any one-line pointer in its always-on files, and a person there resolves a recorded conflict. Promotion to empirical is a curation PR on that project. strata proposes that PR; it does not merge it, and it never writes gold. These rules do not name a required approver.
