@@ -1,0 +1,31 @@
+# Fixture config for the episodic and empirical layer profiles.
+# okf validate loads profiles from this file; it does not read standalone
+# profile files. Gold is out of scope for this milestone.
+
+[profiles.episodic]
+required_frontmatter = [
+  "sources",
+  "generated",
+  "verified",
+  "status",
+  "superseded_by",
+  "count",
+  "key",
+]
+
+[profiles.empirical]
+required_frontmatter = [
+  "sources",
+  "generated",
+  "verified",
+  "status",
+  "superseded_by",
+]
+
+[bundles.episodic]
+bundle_root = "episodic"
+profile = "episodic"
+
+[bundles.empirical]
+bundle_root = "empirical"
+profile = "empirical"
